@@ -1,0 +1,88 @@
+### Variables
+@baseUrl = http://localhost:3000
+@apiKey = kunci-rahasia-futsal
+
+### 1. Root Check
+GET {{baseUrl}}/
+
+### 2. POST Venue (Jakabaring)
+POST {{baseUrl}}/venue
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "kode": "VN01",
+  "nama": "Venue Jakabaring"
+}
+
+### 3. POST Venue (Boom Futsal)
+POST {{baseUrl}}/venue
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "kode": "VN02",
+  "nama": "Venue Boom Futsal"
+}
+
+### 4. GET Semua Venue
+GET {{baseUrl}}/venue
+
+### 5. POST Lapangan A (Sintetis)
+# Ganti <VENUE_ID> dengan _id venue yang dibuat dari request sebelumnya
+POST {{baseUrl}}/lapangan
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "kodeLapangan": "LAP-01",
+  "nama": "Lapangan A",
+  "tarifPerJam": 100000,
+  "jenisLantai": "sintetis",
+  "fasilitas": {
+    "lampu": "LED 4 titik",
+    "tribun": "2 tingkat"
+  },
+  "venueId": "650000000000000000000001"
+}
+
+### 6. POST Lapangan B (Vinyl)
+POST {{baseUrl}}/lapangan
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "kodeLapangan": "LAP-02",
+  "nama": "Lapangan B",
+  "tarifPerJam": 120000,
+  "jenisLantai": "vinyl",
+  "fasilitas": {
+    "lampu": "LED 6 titik",
+    "tribun": "3 tingkat"
+  },
+  "venueId": "650000000000000000000001"
+}
+
+### 7. GET Lapangan - Filter jenisLantai
+GET {{baseUrl}}/lapangan?jenisLantai=vinyl
+
+### 8. GET Lapangan - Query Kompleks (Filter, Venue, Sort, Pagination, Projection)
+GET {{baseUrl}}/lapangan?jenisLantai=vinyl&venue=VN01&sort=-tarifPerJam&page=1&limit=5&fields=kodeLapangan,nama,tarifPerJam,venueId
+
+### 9. GET Detail Lapangan by ID
+# Ganti <LAPANGAN_ID> dengan id yang valid
+GET {{baseUrl}}/lapangan/<LAPANGAN_ID>
+
+### 10. PUT Update Lapangan
+PUT {{baseUrl}}/lapangan/<LAPANGAN_ID>
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "tarifPerJam": 130000
+}
+
+### 11. DELETE Lapangan
+DELETE {{baseUrl}}/lapangan/<LAPANGAN_ID>
+x-api-key: {{apiKey}}
+
